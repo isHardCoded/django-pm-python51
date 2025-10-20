@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'users/base.html' %}
 
-</body>
-</html>
+{% block title %} Вход {% endblock %}
+
+{% block inputs %}
+    <input name="username" placeholder="Имя пользователя" type="text" class="border border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-600 focus:border-2">
+    <input name="password" placeholder="Пароль" type="password" class="border border-gray-300 p-2 rounded-md focus:outline-none focus:border-indigo-600 focus:border-2">
+{% endblock %}
+
+{% block form_title %} Вход {% endblock %}
+
+{% block button %} Войти {% endblock %}

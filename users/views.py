@@ -24,3 +24,6 @@ def register(request):
         return render(request, "users/sign_up.html", {"error": error})
 
     return render(request, "users/sign_up.html")
+
+def login(request):
+    return render(request, 'users/sign_in.html')
