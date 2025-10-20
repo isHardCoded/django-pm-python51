@@ -2,9 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        * {
+            font-family: "Inter", sans-serif;
+        }
+
+        .container {
+          display: grid;
+          grid-template-columns: 0.4fr 2.7fr;
+          grid-template-rows: 1fr;
+          gap: 0px 0px;
+          grid-template-areas:
+            "sidebar main";
+        }
+        .sidebar { grid-area: sidebar; }
+        .main { grid-area: main; }
+    </style>
 </head>
 <body>
-
+    <div class="container">
+      <aside class="sidebar">123</aside>
+      <main class="main">
+          {% block content %}
+          {% endblock %}
+      </main>
+    </div>
 </body>
 </html>
