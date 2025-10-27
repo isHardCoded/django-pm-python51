@@ -1,0 +1,66 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+    <div class="max-w-2xl p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold mb-4 text-gray-800">Создание проекта</h2>
+  <form method="POST" class="space-y-4">
+    {% csrf_token %}
+    <!-- Название -->
+    <div>
+      <label for="title" class="block mb-1 text-sm font-medium text-gray-700">Название</label>
+      <input id="title" name="title" type="text" placeholder="Введите название проекта"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-150 ease-in-out"
+      />
+    </div>
+
+    <!-- Описание -->
+    <div>
+      <label for="description" class="block mb-1 text-sm font-medium text-gray-700">Описание</label>
+      <input id="description" name="description" placeholder="Введите описание проекта" type="text"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-150 ease-in-out"
+      />
+    </div>
+
+    <!-- Статус -->
+    <div>
+      <label for="status" class="block mb-1 text-sm font-medium text-gray-700">Статус</label>
+      <select name="status" id="status"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-150 ease-in-out appearance-none bg-white"
+      >
+        <option value="" disabled selected hidden>Выберите статус</option>
+        {% for status in statuses %}
+          <option value="{{ status.id }}">{{ status.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Начать с -->
+    <div>
+      <label for="date_start" class="block mb-1 text-sm font-medium text-gray-700">Начать с</label>
+      <input id="date_start" type="datetime-local" name="date_start"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-150 ease-in-out"
+      />
+    </div>
+
+    <!-- Закончить -->
+    <div>
+      <label for="date_end" class="block mb-1 text-sm font-medium text-gray-700">Закончить</label>
+      <input id="date_end" type="datetime-local" name="date_end"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-150 ease-in-out"
+      />
+    </div>
+
+    <!-- Кнопка -->
+    <div>
+      <button type="submit"
+        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out"
+      >Создать</button>
+    </div>
+
+    {% if error %}
+        <p class="text-medium text-red-500 text-center">{{ error }}</p>
+    {% endif %}
+
+  </form>
+</div>
+{% endblock %}
