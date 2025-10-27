@@ -36,7 +36,7 @@ def login(request):
 
             if user:
                 user_login(request, user)
-                return redirect('projects')
+                return redirect('projects_kanban')
             else:
                 error = "Неверный логин или пароль"
         else:
