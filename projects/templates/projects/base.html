@@ -28,6 +28,9 @@
     <div class="container">
       <aside class="sidebar">123</aside>
       <main class="main">
+          <div class="flex items-start justify-between rounded-lg shadow-md mb-5 p-2">
+              <a class="bg-indigo-500 p-1 rounded-md text-white hover:bg-indigo-600" href="{% url 'projects_add' %}">Создать проект</a>
+          </div>
           {% block content %}
           {% endblock %}
       </main>
