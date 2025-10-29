@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "django_icons",
 
     'users',
-    'projects'
+    'projects',
+    'tasks'
 ]
 
 DJANGO_ICONS = {
