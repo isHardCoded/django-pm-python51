@@ -26,30 +26,32 @@
 </head>
 <body>
     <div class="container">
-      <aside class="sidebar p-2 shadow-md rounded-md h-screen">
-          <div class="flex gap-3 bg-gray-100 p-2 rounded-lg">
-              <div class="w-10 h-10 bg-blue-500 rounded-full"></div>
-              <div>
-                  <h4 class="text-base font-medium">{{ request.user.username }}</h4>
-                  <p class="text-sm text-gray-500">Статус</p>
+      <aside class="flex flex-col justify-between sidebar p-2 shadow-md rounded-md h-screen">
+          <div>
+              <div class="flex gap-3 bg-gray-50 p-2 rounded-lg border border-gray-200">
+                  <img src="{{ request.user.get_avatar }}" class="w-10 h-10 rounded-full" alt="" />
+                  <div>
+                      <h4 class="text-base font-medium">{{ request.user.username }}</h4>
+                      <p class="text-sm text-gray-500">Статус</p>
+                  </div>
               </div>
+              <nav>
+                  <ul class="flex flex-col mt-4 gap-1">
+                      <li>
+                          <a class="block border border-gray-200 px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg" href="">Проекты</a>
+                      </li>
+                      <li>
+                          <a class="block border border-gray-200 px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg" href="">Задачи</a>
+                      </li>
+                      <li>
+                          <a class="block border border-gray-200 px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg" href="">Пользователи</a>
+                      </li>
+                  </ul>
+              </nav>
           </div>
-
-          <nav>
-              <ul class="flex flex-col mt-4 p-1">
-                  <li class="px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg">
-                      <a href="">Проекты</a>
-                  </li>
-                  <li class="px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg">
-                      <a href="">Задачи</a>
-                  </li>
-                  <li class="px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg">
-                      <a href="">Пользователи</a>
-                  </li>
-              </ul>
-          </nav>
+          <a href="{% url 'logout' %}" class="text-white bg-red-500 hover:bg-red-400 transition-all rounded-lg p-2">Выйти из аккаунта</a>
       </aside>
-      <main class="main">
+      <main class="main mt-12">
           <div class="flex items-start justify-between rounded-lg shadow-md mb-5 p-2">
               <a class="bg-indigo-500 p-1 rounded-md text-white hover:bg-indigo-600" href="{% url 'projects_add' %}">Создать проект</a>
           </div>
