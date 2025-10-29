@@ -14,9 +14,9 @@
 
         .container {
           display: grid;
-          grid-template-columns: 0.4fr 2.7fr;
+          grid-template-columns: 0.6fr 2.7fr;
           grid-template-rows: 1fr;
-          gap: 0px 0px;
+          gap: 5px 50px;
           grid-template-areas:
             "sidebar main";
         }
@@ -26,7 +26,29 @@
 </head>
 <body>
     <div class="container">
-      <aside class="sidebar">123</aside>
+      <aside class="sidebar p-2 shadow-md rounded-md h-screen">
+          <div class="flex gap-3 bg-gray-100 p-2 rounded-lg">
+              <div class="w-10 h-10 bg-blue-500 rounded-full"></div>
+              <div>
+                  <h4 class="text-base font-medium">{{ request.user.username }}</h4>
+                  <p class="text-sm text-gray-500">Статус</p>
+              </div>
+          </div>
+
+          <nav>
+              <ul class="flex flex-col mt-4 p-1">
+                  <li class="px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg">
+                      <a href="">Проекты</a>
+                  </li>
+                  <li class="px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg">
+                      <a href="">Задачи</a>
+                  </li>
+                  <li class="px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg">
+                      <a href="">Пользователи</a>
+                  </li>
+              </ul>
+          </nav>
+      </aside>
       <main class="main">
           <div class="flex items-start justify-between rounded-lg shadow-md mb-5 p-2">
               <a class="bg-indigo-500 p-1 rounded-md text-white hover:bg-indigo-600" href="{% url 'projects_add' %}">Создать проект</a>
