@@ -41,7 +41,7 @@
               <nav>
                   <ul class="flex flex-col mt-4 gap-1">
                       <li>
-                          <a class="flex items-center gap-4  text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
+                          <a class="flex items-center gap-4 ml-[8px] text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
                               {% icon 'project' extra_classes='fa-xl text-black/60' %} <span>Проекты</span></a>
                       </li>
                       <li>
@@ -49,14 +49,14 @@
                               {% icon 'task' extra_classes='fa-xl text-black/60' %} <span>Задачи</span></a>
                       </li>
                       <li>
-                          <a class="flex items-center gap-4  text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
+                          <a class="flex items-center gap-4 ml-[8px] text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
                               {% icon 'user' extra_classes='fa-xl text-black/60' %} <span>Пользователи</span></a>
                       </li>
                   </ul>
               </nav>
           </div>
 
-          <a href="{% url 'logout' %}" class=" flex items-center gap-4 font-medium transition-all rounded-lg p-2 hover:bg-gray-100 transition-all">
+          <a href="{% url 'logout' %}" class="flex items-center gap-4 font-medium transition-all rounded-lg p-2 hover:bg-gray-100 transition-all">
               {% icon 'logout' extra_classes='fa-xl text-black/60' %} <span class="text-black/70">Выйти из аккаунта</span>
           </a>
       </aside>
