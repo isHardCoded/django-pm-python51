@@ -37,10 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_icons",
 
     'users',
     'projects'
 ]
+
+DJANGO_ICONS = {
+    "ICONS": {
+        "user": {"name": "fa-regular fa-user"},
+        "project": {"name": "fa-regular fa-clipboard"},
+        "task": {"name": "fa-regular fa-rectangle-list"},
+        "logout": {"name": "fa-solid fa-arrow-right-from-bracket"},
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,6 +129,9 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
