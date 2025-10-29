@@ -1,8 +1,11 @@
+{% load icons %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -38,18 +41,24 @@
               <nav>
                   <ul class="flex flex-col mt-4 gap-1">
                       <li>
-                          <a class="block border border-gray-200 px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg" href="">Проекты</a>
+                          <a class="flex items-center gap-4  text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
+                              {% icon 'project' extra_classes='fa-xl text-black/60' %} <span>Проекты</span></a>
                       </li>
                       <li>
-                          <a class="block border border-gray-200 px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg" href="">Задачи</a>
+                          <a class="flex items-center gap-4  text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
+                              {% icon 'task' extra_classes='fa-xl text-black/60' %} <span>Задачи</span></a>
                       </li>
                       <li>
-                          <a class="block border border-gray-200 px-2 py-3 cursor-pointer hover:bg-gray-50 rounded-lg" href="">Пользователи</a>
+                          <a class="flex items-center gap-4  text-black/80 font-medium  px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">
+                              {% icon 'user' extra_classes='fa-xl text-black/60' %} <span>Пользователи</span></a>
                       </li>
                   </ul>
               </nav>
           </div>
-          <a href="{% url 'logout' %}" class="text-white bg-red-500 hover:bg-red-400 transition-all rounded-lg p-2">Выйти из аккаунта</a>
+
+          <a href="{% url 'logout' %}" class=" flex items-center gap-4 font-medium transition-all rounded-lg p-2 hover:bg-gray-100 transition-all">
+              {% icon 'logout' extra_classes='fa-xl text-black/60' %} <span class="text-black/70">Выйти из аккаунта</span>
+          </a>
       </aside>
       <main class="main mt-12">
           <div class="flex items-start justify-between rounded-lg shadow-md mb-5 p-2">
