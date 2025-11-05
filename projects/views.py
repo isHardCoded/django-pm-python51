@@ -11,7 +11,7 @@ def kanban(request):
         "projects_planning": Project.objects.filter(status=ProjectStatus.objects.get(name="Планируется")),
         "projects_progress": Project.objects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
     }
-
+    print("Hello, Django!")
     return render(request, 'projects/kanban.html', context)
 
 @login_required(login_url='login')
