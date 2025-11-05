@@ -11,7 +11,7 @@ def kanban(request):
         "projects_planning": Project.objects.filter(status=ProjectStatus.objects.get(name="Планируется")),
         "projects_progress": Project.objects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
     }
-    print("Hello, Django!")
+
     return render(request, 'projects/kanban.html', context)
 
 @login_required(login_url='login')
@@ -44,5 +44,5 @@ def add(request):
     context = {
         "statuses": ProjectStatus.objects.all()
     }
-print("Hello, Django!")
+
     return render(request, "projects/add-form.html", context)
