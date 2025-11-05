@@ -12,7 +12,7 @@
                     <li>
                         <div class="p-2 shadow-sm rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100 transition-all">
                             <h3 class="font-bold text-[18px]">{{ task.title }}</h3>
-                            <p class="text-[14px] text-gray-600">{{ task.owner }}</p>
+                            <p class="text-[14px] text-gray-600">{{ task.assign.username }}</p>
                             <div class="flex items-center gap-2 text-gray-600">
                                 <span class="text-[14px]">{{ task.deadline|date:"Y-m-d" }}</span>
                             </div>
@@ -31,7 +31,7 @@
                     <li>
                         <div class="p-2 shadow-sm rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100 transition-all">
                             <h3 class="font-bold text-[18px]">{{ task.title }}</h3>
-                            <p class="text-[14px] text-gray-600">{{ task.owner }}</p>
+                            <p class="text-[14px] text-gray-600">{{ task.assign.username }}</p>
                             <div class="flex items-center gap-2 text-gray-600">
                                 <span class="text-[14px]">{{ task.deadline|date:"Y-m-d" }}</span>
                             </div>
