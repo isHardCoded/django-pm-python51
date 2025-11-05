@@ -44,5 +44,5 @@ def add(request):
     context = {
         "statuses": ProjectStatus.objects.all()
     }
-
+print("Hello, Django!")
     return render(request, "projects/add-form.html", context)
