@@ -1,8 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from projects.models import ProjectStatus, Project
 
-
+@login_required(login_url='login')
 def kanban(request):
     context = {
         "status_planning": ProjectStatus.objects.get(name="Планируется"),
@@ -13,6 +14,7 @@ def kanban(request):
 
     return render(request, 'projects/kanban.html', context)
 
+@login_required(login_url='login')
 def add(request):
     if request.method == "POST":
         title = request.POST["title"]
