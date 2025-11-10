@@ -1,3 +1,5 @@
+from django.utils.text import slugify
+
 from users.models import CustomUser
 from django.db import models
 
