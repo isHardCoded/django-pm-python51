@@ -5,7 +5,6 @@ from projects.models import ProjectStatus, Project
 from tasks.models import Task
 
 @login_required(login_url='login')
-
 def kanban(request):
     context = {
         "status_planning": ProjectStatus.objects.get(name="Планируется"),
@@ -54,7 +53,7 @@ def details(request, project_id):
 
     context = {
         "project": project,
-        "posts": Task.objects.filter(project=project)
+        "tasks": Task.objects.filter(project=project)
     }
 
     return render(request, 'projects/details.html', context)
