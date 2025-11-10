@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from projects.models import ProjectStatus, Project
-
+from tasks.models import Task
 
 def kanban(request):
     context = {
@@ -44,3 +44,13 @@ def add(request):
     }
 
     return render(request, "projects/add-form.html", context)
+
+def details(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    context = {
+        "project": project,
+        "posts": Task.objects.filter(project=project)
+    }
+
+    return render(request, 'projects/details.html', context)
