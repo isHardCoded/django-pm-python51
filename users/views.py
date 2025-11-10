@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login as user_login, logout
+from django.contrib.auth import authenticate, login as user_login, logout as user_logout
 from django.shortcuts import render, redirect
 from users.models import CustomUser
 
@@ -45,3 +45,7 @@ def login(request):
         return render(request, 'users/sign_in.html', {"error": error})
 
     return render(request, 'users/sign_in.html')
+
+def logout(request):
+    user_logout(request)
+    return redirect('login')
