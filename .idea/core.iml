@@ -14,7 +14,7 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.13 virtualenv at C:\Users\User\Desktop\project_manager\venv" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.14 virtualenv at C:\Users\User\Desktop\venvs\venv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

@@ -1,0 +1,55 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+<div class="mx-auto p-6 bg-white rounded-lg shadow-lg mt-8">
+    <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ project.title }}</h1>
+        <div class="p-1 rounded-md {% if project.status.name == 'Планируется' %}bg-amber-200{% else %}bg-blue-200{% endif %}">
+            <span class="{% if project.status.name == 'Планируется' %}text-amber-600{% else %}text-blue-600{% endif %}">{{ project.status.name }}</span>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <h2 class="font-semibold text-gray-700 mb-2">Описание</h2>
+            <p class="text-gray-600">{{ project.description }}</p>
+        </div>
+        <div>
+            <h3 class="font-semibold text-gray-700 mb-1">Владелец</h3>
+            <p class="text-gray-600">{{ project.owner.username }}</p>
+        </div>
+        <div>
+            <h3 class="font-semibold text-gray-700 mb-1">Дата начала</h3>
+            <p class="text-gray-600">{{ project.date_start|date:"d M Y H:i" }}</p>
+        </div>
+        <div>
+            <h3 class="font-semibold text-gray-700 mb-1">Дата окончания</h3>
+            <p class="text-gray-600">{{ project.date_end|date:"d M Y H:i" }}</p>
+        </div>
+        <div>
+            <h3 class="font-semibold text-gray-700 mb-1">Создан</h3>
+            <p class="text-gray-600">{{ project.created_at|date:"d M Y H:i" }}</p>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-3">Задачи проекта</h2>
+        {% if tasks %}
+            <ul class="space-y-4">
+                {% for task in tasks %}
+                <li class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
+                    <h3 class="text-xl font-semibold mb-2">{{ task.title }}</h3>
+                    <p class="text-gray-600 mb-2">{{ task.description }}</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>Статус: {{ task.status.name }}</span>
+                        <span>Ответственный: {{ task.assign.username }}</span>
+                        <span>Дедлайн: {{ task.deadline|date:"d M Y" }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-500">Задачи не найдены.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
