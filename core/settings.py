@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'zitra@yandex.ru'
+EMAIL_HOST_PASSWORD = 'srwhskajilehokyp'
 
 # Application definition
 
@@ -41,7 +47,8 @@ INSTALLED_APPS = [
 
     'users',
     'projects',
-    'tasks'
+    'tasks',
+    'contacts'
 ]
 
 DJANGO_ICONS = {
