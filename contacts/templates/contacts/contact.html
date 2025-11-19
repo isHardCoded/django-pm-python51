@@ -1,0 +1,25 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+    <form class="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4">
+  <h2 class="text-2xl font-bold mb-2 text-gray-800">Связаться с нами</h2>
+  <input
+    type="text"
+    placeholder="Заголовок"
+    class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+    required
+  />
+  <textarea
+    placeholder="Сообщение"
+    rows="4"
+    class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition resize-none"
+    required
+  ></textarea>
+  <button
+    type="submit"
+    class="max-w-sm bg-indigo-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-indigo-600 transition mt-2"
+  >
+    Отправить
+  </button>
+</form>
+{% endblock %}
