@@ -6,5 +6,5 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     path('check-email/', check_email, name='check_email'),
-    path('/<int:user_id>/<str:token>', confirm_email, name='confirm_email'),
+    path('confirm_email/<int:user_id>/<str:token>/', confirm_email, name='confirm_email'),
 ]

@@ -3,7 +3,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 
-from core import settings
 from users.models import CustomUser
 from users.utils import email_confirmation_token
 
@@ -18,13 +17,14 @@ def register(request):
                 user = CustomUser.objects.create_user(
                     username=username,
                     email=email,
-                    password=password
+                    password=password,
+                    is_active=False,
                 )
 
                 token = email_confirmation_token.make_token(user)
                 domain = get_current_site(request).domain
 
-                confirm_url = f"http://{domain}/confirm_email/{user.pk}/{token}"
+                confirm_url = f"http://{domain}/users/confirm_email/{user.pk}/{token}"
 
                 send_mail(
                     subject="Подтверждение регистрации",
@@ -34,7 +34,7 @@ def register(request):
                     fail_silently=False,
                 )
 
-                return redirect('login')
+                return redirect('check_email')
 
             else:
                 error = "Пользователь с таким именем или почтой уже существует"
@@ -80,6 +80,7 @@ def confirm_email(request, user_id, token):
 
     if email_confirmation_token.check_token(user, token):
         user.email_confirmed = True
+        user.is_active = True
         user.save()
         return render(request, "users/confirm_success.html")
 
