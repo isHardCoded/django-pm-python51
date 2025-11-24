@@ -1,6 +1,10 @@
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+
 from users.models import CustomUser
+from users.utils import email_confirmation_token
 
 def register(request):
     if request.method == 'POST':
@@ -10,13 +14,28 @@ def register(request):
 
         if username and email and password:
             if not CustomUser.objects.filter(username=username, email=email).exists():
-                CustomUser.objects.create_user(
+                user = CustomUser.objects.create_user(
                     username=username,
                     email=email,
-                    password=password
+                    password=password,
+                    is_active=False,
                 )
 
-                return redirect('login')
+                token = email_confirmation_token.make_token(user)
+                domain = get_current_site(request).domain
+
+                confirm_url = f"http://{domain}/users/confirm_email/{user.pk}/{token}"
+
+                send_mail(
+                    subject="Подтверждение регистрации",
+                    message=f"Перейдите по ссылке для подтверждения: {confirm_url}",
+                    from_email="z1tra@yandex.ru",
+                    recipient_list=[email],
+                    fail_silently=False,
+                )
+
+                return redirect('check_email')
+
             else:
                 error = "Пользователь с таким именем или почтой уже существует"
         else:
@@ -49,3 +68,21 @@ def login(request):
 def logout(request):
     user_logout(request)
     return redirect('login')
+
+def check_email(request):
+    return render(request, "users/check_email.html")
+
+def confirm_email(request, user_id, token):
+    user = CustomUser.objects.get(pk=user_id)
+
+    if not user:
+        return render(request, "users/confirm_failed.html")
+
+    if email_confirmation_token.check_token(user, token):
+        user.email_confirmed = True
+        user.is_active = True
+        user.save()
+        return render(request, "users/confirm_success.html")
+
+    return render(request, "users/confirm_failed.html")
+

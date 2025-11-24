@@ -3,6 +3,7 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     avatar = models.ImageField(null=True, blank=True, upload_to='avatars/')
+    email_confirmed = models.BooleanField(default=False)
 
     @property
     def get_avatar(self):
