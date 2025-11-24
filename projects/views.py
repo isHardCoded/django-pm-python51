@@ -1,7 +1,8 @@
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
 
 from projects.models import ProjectStatus, Project
+from tasks.models import Task
 
 @login_required(login_url='login')
 def kanban(request):
@@ -46,3 +47,13 @@ def add(request):
     }
 
     return render(request, "projects/add-form.html", context)
+
+def details(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    context = {
+        "project": project,
+        "tasks": Task.objects.filter(project=project)
+    }
+
+    return render(request, 'projects/details.html', context)
