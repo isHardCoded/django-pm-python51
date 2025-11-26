@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'users',
     'projects',
     'tasks',
-    'contacts'
+    'contacts',
+    'base'
 ]
 
 DJANGO_ICONS = {

@@ -1,4 +1,4 @@
-{% extends 'tasks/base.html' %}
+{% extends 'base/base.html' %}
 
 {% block content %}
     <div class="flex gap-4 p-5 shadow-md rounded-lg">
@@ -42,4 +42,10 @@
         </div>
 
     </div>
+{% endblock %}
+
+{% block panel %}
+        <div class="flex items-start justify-between rounded-lg shadow-md mb-5 p-2">
+            <a class="bg-indigo-500 p-1 rounded-md text-white hover:bg-indigo-600" href="{% url 'tasks_add' %}">Создать задачу</a>
+        </div>
 {% endblock %}
