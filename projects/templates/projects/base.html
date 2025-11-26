@@ -35,13 +35,13 @@
                   <img width="40" src="/media/logo.png" alt="">
                   <p class="font-medium">Project Manager App</p>
               </div>
-              <div class="flex gap-3 bg-gray-50 p-2 rounded-lg border border-gray-200">
+              <a href="{% url 'profile' %}" class="flex gap-3 bg-gray-50 p-2 rounded-lg border border-gray-200 cursor-pointer hover:shadow-sm transition-all">
                   <img src="{{ request.user.get_avatar }}" class="w-10 h-10 rounded-full" alt="" />
                   <div>
                       <h4 class="text-base font-medium">{{ request.user.username }}</h4>
                       <p class="text-sm text-gray-500">Статус</p>
                   </div>
-              </div>
+              </a>
               <nav>
                   <ul class="flex flex-col mt-4 gap-1">
                       <li>

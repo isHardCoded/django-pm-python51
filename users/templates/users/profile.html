@@ -1,0 +1,6 @@
+{% extends 'projects/base.html' %}
+
+{% block content %}
+    <h1>Profile {{ user.username }}</h1>
+    <img src="{{ user.get_avatar }}" alt="">
+{% endblock %}

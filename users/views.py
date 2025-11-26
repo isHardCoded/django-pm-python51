@@ -86,3 +86,7 @@ def confirm_email(request, user_id, token):
 
     return render(request, "users/confirm_failed.html")
 
+def profile(request):
+    user = CustomUser.objects.get(pk=request.user.id)
+
+    return render(request, 'users/profile.html', {'user': user})
