@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login as user_login, logout as user_logout
+from django.contrib.auth import authenticate, login as user_login, logout as user_logout, update_session_auth_hash
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -89,12 +89,36 @@ def confirm_email(request, user_id, token):
     return render(request, "users/confirm_failed.html")
 
 def profile(request):
-    user = CustomUser.objects.get(pk=request.user.id)
-    projects = Project.objects.filter(owner=request.user.id)
-    tasks = Task.objects.filter(owner=request.user.id)
+    user = request.user
+    projects = Project.objects.filter(owner=user.id)
+    tasks = Task.objects.filter(owner=user.id)
 
-    print(projects)
-    print(tasks)
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_password_confirm = request.POST['new_password_confirm']
+
+        if not user.check_password(old_password):
+            return render(request, "users/profile.html", {
+                "user": user,
+                "error": "Старый пароль неверный"
+            })
+
+        if new_password != new_password_confirm:
+            return render(request, "users/profile.html", {
+                "user": user,
+                "error": "Новые пароли не совпадают"
+            })
+
+        user.set_password(new_password)
+        user.save()
+
+        update_session_auth_hash(request, user)
+
+        return render(request, "users/profile.html", {
+            "user": user,
+            "success": "Пароль успешно изменен"
+        })
 
     return render(request, 'users/profile.html', {
         'user': user,
