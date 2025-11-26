@@ -3,6 +3,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 
+from projects.models import Project
+from tasks.models import Task
 from users.models import CustomUser
 from users.utils import email_confirmation_token
 
@@ -88,5 +90,14 @@ def confirm_email(request, user_id, token):
 
 def profile(request):
     user = CustomUser.objects.get(pk=request.user.id)
+    projects = Project.objects.filter(owner=request.user.id)
+    tasks = Task.objects.filter(owner=request.user.id)
 
-    return render(request, 'users/profile.html', {'user': user})
+    print(projects)
+    print(tasks)
+
+    return render(request, 'users/profile.html', {
+        'user': user,
+        'projects': projects,
+        'tasks': tasks,
+    })
