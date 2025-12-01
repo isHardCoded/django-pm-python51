@@ -6,14 +6,32 @@ from tasks.models import Task
 
 @login_required(login_url='login')
 def kanban(request):
-    context = {
+    status_filter = request.GET.get('status')
+
+    projects = Project.objects.all()
+
+    if status_filter in ["planning", "progress"]:
+        projects = projects.filter(status=ProjectStatus.objects.get(
+            name="Планируется" if status_filter == "planning" else "Выполняется"
+        ))
+
+    sort_option = request.GET.get('sort')
+
+    if sort_option == "title":
+        projects = projects.order_by('title')
+    elif sort_option == "start":
+        projects = projects.order_by("date_start")
+    elif sort_option == "end":
+        projects = projects.order_by("date_end")
+
+    return render(request, 'projects/kanban.html', {
         "status_planning": ProjectStatus.objects.get(name="Планируется"),
         "status_progress": ProjectStatus.objects.get(name="Выполняется"),
-        "projects_planning": Project.objects.filter(status=ProjectStatus.objects.get(name="Планируется")),
-        "projects_progress": Project.objects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
-    }
-
-    return render(request, 'projects/kanban.html', context)
+        "projects_planning": projects.filter(status=ProjectStatus.objects.get(name="Планируется")),
+        "projects_progress": projects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
+        "current_status": status_filter,
+        "current_sort": sort_option,
+    })
 
 @login_required(login_url='login')
 def add(request):
