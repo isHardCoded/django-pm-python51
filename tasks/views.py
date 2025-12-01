@@ -5,16 +5,34 @@ from users.models import CustomUser
 from projects.models import Project
 from tasks.models import TaskStatus, Task
 
+STATUS_FILTER = None
+
 @login_required(login_url='login')
 def kanban(request):
-    context = {
+    STATUS_FILTER = request.GET.get('status')
+
+    tasks = Task.objects.all()
+
+    if STATUS_FILTER in ["planning", "progress"]:
+        tasks = tasks.filter(status=TaskStatus.objects.get(
+            name="Планируется" if STATUS_FILTER == "planning" else "Выполняется"
+        ))
+
+    sort_option = request.GET.get('sort')
+
+    if sort_option == "title":
+        tasks = tasks.order_by('title')
+    elif sort_option == "deadline":
+        tasks = tasks.order_by("deadline")
+
+    return render(request, 'tasks/kanban.html', {
         "status_planning": TaskStatus.objects.get(name="Планируется"),
         "status_progress": TaskStatus.objects.get(name="Выполняется"),
-        "tasks_planning": Task.objects.filter(status=TaskStatus.objects.get(name="Планируется")),
-        "tasks_progress": Task.objects.filter(status=TaskStatus.objects.get(name="Выполняется")),
-    }
-
-    return render(request, 'tasks/kanban.html', context)
+        "tasks_planning": tasks.filter(status=TaskStatus.objects.get(name="Планируется")),
+        "tasks_progress": tasks.filter(status=TaskStatus.objects.get(name="Выполняется")),
+        "current_status": STATUS_FILTER,
+        "current_sort": sort_option,
+    })
 
 @login_required(login_url='login')
 def add(request):
