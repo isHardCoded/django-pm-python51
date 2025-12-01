@@ -4,15 +4,17 @@ from django.contrib.auth.decorators import login_required
 from projects.models import ProjectStatus, Project
 from tasks.models import Task
 
+STATUS_FILTER = None
+
 @login_required(login_url='login')
 def kanban(request):
-    status_filter = request.GET.get('status')
+    STATUS_FILTER = request.GET.get('status')
 
     projects = Project.objects.all()
 
-    if status_filter in ["planning", "progress"]:
+    if STATUS_FILTER in ["planning", "progress"]:
         projects = projects.filter(status=ProjectStatus.objects.get(
-            name="Планируется" if status_filter == "planning" else "Выполняется"
+            name="Планируется" if STATUS_FILTER == "planning" else "Выполняется"
         ))
 
     sort_option = request.GET.get('sort')
@@ -29,7 +31,7 @@ def kanban(request):
         "status_progress": ProjectStatus.objects.get(name="Выполняется"),
         "projects_planning": projects.filter(status=ProjectStatus.objects.get(name="Планируется")),
         "projects_progress": projects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
-        "current_status": status_filter,
+        "current_status": STATUS_FILTER,
         "current_sort": sort_option,
     })
 
