@@ -17,7 +17,11 @@
 
             <button class="bg-gray-100 text-sm px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">Применить</button>
         </form>
+        <div>
+            <a href="{% url 'tasks_kanban' %}">Доска</a>
+            <a href="{% url 'tasks_table' %}">Таблица</a>
             <a class="bg-indigo-500 p-1 rounded-md text-white hover:bg-indigo-600" href="{% url 'tasks_add' %}">Создать задачу</a>
+        </div>
         </div>
 {% endblock %}
 

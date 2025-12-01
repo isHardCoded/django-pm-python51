@@ -7,8 +7,7 @@ from tasks.models import TaskStatus, Task
 
 STATUS_FILTER = None
 
-@login_required(login_url='login')
-def kanban(request):
+def get_tasks(request):
     STATUS_FILTER = request.GET.get('status')
 
     tasks = Task.objects.all()
@@ -25,14 +24,24 @@ def kanban(request):
     elif sort_option == "deadline":
         tasks = tasks.order_by("deadline")
 
-    return render(request, 'tasks/kanban.html', {
+    context = {
         "status_planning": TaskStatus.objects.get(name="Планируется"),
         "status_progress": TaskStatus.objects.get(name="Выполняется"),
         "tasks_planning": tasks.filter(status=TaskStatus.objects.get(name="Планируется")),
         "tasks_progress": tasks.filter(status=TaskStatus.objects.get(name="Выполняется")),
         "current_status": STATUS_FILTER,
         "current_sort": sort_option,
-    })
+    }
+
+    return context
+
+@login_required(login_url='login')
+def kanban(request):
+    return render(request, 'tasks/kanban.html', get_tasks(request))
+
+@login_required(login_url='login')
+def table(request):
+    return render(request, 'tasks/table.html', get_tasks(request))
 
 @login_required(login_url='login')
 def add(request):
