@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Чат</h2>
+    <div id="chat-log"></div>
+    <input id="chat-message-input" type="text">
+    <button id="chat-message-submit">Отправить</button>
+
+    <script>
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/'
+        )
+
+        console.log(chatSocket)
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data)
+            const chatLog = document.getElementById('chat-log')
+            chatLog.innerHTML += `<b>${data.username}:</b> ${data.message}<br/>`
+        }
+
+        document.getElementById('chat-message-submit').onclick = function(e) {
+            const input = document.getElementById('chat-message-input')
+
+            chatSocket.send(JSON.stringify({
+                'message': input.value
+            }))
+
+            input.value = ''
+        }
+    </script>
+</body>
+</html>
