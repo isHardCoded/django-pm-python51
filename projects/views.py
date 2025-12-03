@@ -4,16 +4,36 @@ from django.contrib.auth.decorators import login_required
 from projects.models import ProjectStatus, Project
 from tasks.models import Task
 
+STATUS_FILTER = None
+
 @login_required(login_url='login')
 def kanban(request):
-    context = {
+    STATUS_FILTER = request.GET.get('status')
+
+    projects = Project.objects.all()
+
+    if STATUS_FILTER in ["planning", "progress"]:
+        projects = projects.filter(status=ProjectStatus.objects.get(
+            name="Планируется" if STATUS_FILTER == "planning" else "Выполняется"
+        ))
+
+    sort_option = request.GET.get('sort')
+
+    if sort_option == "title":
+        projects = projects.order_by('title')
+    elif sort_option == "start":
+        projects = projects.order_by("date_start")
+    elif sort_option == "end":
+        projects = projects.order_by("date_end")
+
+    return render(request, 'projects/kanban.html', {
         "status_planning": ProjectStatus.objects.get(name="Планируется"),
         "status_progress": ProjectStatus.objects.get(name="Выполняется"),
-        "projects_planning": Project.objects.filter(status=ProjectStatus.objects.get(name="Планируется")),
-        "projects_progress": Project.objects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
-    }
-
-    return render(request, 'projects/kanban.html', context)
+        "projects_planning": projects.filter(status=ProjectStatus.objects.get(name="Планируется")),
+        "projects_progress": projects.filter(status=ProjectStatus.objects.get(name="Выполняется")),
+        "current_status": STATUS_FILTER,
+        "current_sort": sort_option,
+    })
 
 @login_required(login_url='login')
 def add(request):

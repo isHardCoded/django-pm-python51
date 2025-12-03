@@ -1,53 +1,77 @@
-{% extends 'projects/base.html' %}
+{% extends 'base/base.html' %}
+
+{% block panel %}
+<div class="flex flex-col gap-4 md:flex-row md:items-start justify-between rounded-lg shadow-md mb-5 p-2 bg-white">
+    <form method="GET" class="flex items-center gap-3">
+        <select class="text-sm border rounded-md border-gray-300 py-1 px-2 bg-white" name="status" id="">
+            <option class="text-sm" value="">Все</option>
+            <option class="text-sm" value="planning" {% if current_status == "planning" %}selected{% endif %}>Планируются</option>
+            <option class="text-sm" value="progress" {% if current_status == "progress" %}selected{% endif %}>Выполняются</option>
+        </select>
+
+        <select class="text-sm border rounded-md border-gray-300 py-1 px-2 bg-white" name="sort" id="">
+            <option class="text-sm" value="">Сортировать</option>
+            <option class="text-sm" value="title" {% if current_sort == "title" %}selected{% endif %}>По названию</option>
+            <option class="text-sm" value="start" {% if current_sort == "start" %}selected{% endif %}>По дате начала</option>
+            <option class="text-sm" value="end" {% if current_sort == "end" %}selected{% endif %}>По дате окончания</option>
+        </select>
+
+        <button class="bg-gray-100 text-sm px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">Применить</button>
+    </form>
+    <a class="bg-indigo-500 p-1 rounded-md text-sm text-white hover:bg-indigo-600 text-center" href="{% url 'projects_add' %}">Создать проект</a>
+</div>
+{% endblock %}
 
 {% block content %}
-    <div class="flex gap-4 p-5 shadow-md rounded-lg">
-
-        <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
-            <div class="p-1 rounded-md bg-amber-200">
-                <span class="text-amber-800">{{ status_planning }}</span>
-            </div>
-            <ul class="flex flex-col gap-2">
-                {% for project in projects_planning %}
-                    <li>
-                        <a href="{% url 'projects_details' project_id=project.id %}">
-                            <div class="p-2 shadow-sm rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100 transition-all">
-                                <h3 class="font-bold text-[18px]">{{ project.title }}</h3>
-                                <p class="text-[14px] text-gray-600">{{ project.owner }}</p>
-                                <div class="flex items-center gap-2 text-gray-600">
-                                    <span class="text-[14px]">{{ project.date_start|date:"Y-m-d" }}</span>
-                                    <span class="text-[14px]">-></span>
-                                    <span class="text-[14px]">{{ project.date_end|date:"Y-m-d" }}</span>
+    <div class="flex gap-4 p-5 shadow-md rounded-lg bg-white">
+            {% if current_status == "planning" or current_status == "" or current_status == None %}
+                <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
+                <div class="p-1 rounded-md bg-amber-200">
+                    <span class="text-amber-800">{{ status_planning }}</span>
+                </div>
+                <ul class="flex flex-col gap-2">
+                    {% for project in projects_planning %}
+                        <li>
+                            <a href="{% url 'projects_details' project_id=project.id %}">
+                                <div class="p-2 shadow-sm rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100 transition-all">
+                                    <h3 class="font-bold text-[18px]">{{ project.title }}</h3>
+                                    <p class="text-[14px] text-gray-600">{{ project.owner }}</p>
+                                    <div class="flex items-center gap-2 text-gray-600">
+                                        <span class="text-[14px]">{{ project.date_start|date:"Y-m-d" }}</span>
+                                        <span class="text-[14px]">-></span>
+                                        <span class="text-[14px]">{{ project.date_end|date:"Y-m-d" }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
-            <div class="p-1 rounded-md bg-blue-200">
-                <span class="text-blue-800">{{ status_progress }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-            <ul class="flex flex-col gap-2">
-                {% for project in projects_progress %}
-                    <li>
-                        <a href="{% url 'projects_details' project_id=project.id %}">
-                            <div class="p-2 shadow-sm rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100 transition-all">
-                                <h3 class="font-bold text-[18px]">{{ project.title }}</h3>
-                                <p class="text-[14px] text-gray-600">{{ project.owner }}</p>
-                                <div class="flex items-center gap-2 text-gray-600">
-                                    <span class="text-[14px]">{{ project.date_start|date:"Y-m-d" }}</span>
-                                    <span class="text-[14px]">-></span>
-                                    <span class="text-[14px]">{{ project.date_end|date:"Y-m-d" }}</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+            {% endif %}
 
+            {% if current_status == "progress" or current_status == "" or current_status == None %}
+                <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
+                <div class="p-1 rounded-md bg-blue-200">
+                    <span class="text-blue-800">{{ status_progress }}</span>
+                </div>
+                <ul class="flex flex-col gap-2">
+                    {% for project in projects_progress %}
+                        <li>
+                            <a href="{% url 'projects_details' project_id=project.id %}">
+                                <div class="p-2 shadow-sm rounded-md border border-gray-300 hover:cursor-pointer hover:bg-gray-100 transition-all">
+                                    <h3 class="font-bold text-[18px]">{{ project.title }}</h3>
+                                    <p class="text-[14px] text-gray-600">{{ project.owner }}</p>
+                                    <div class="flex items-center gap-2 text-gray-600">
+                                        <span class="text-[14px]">{{ project.date_start|date:"Y-m-d" }}</span>
+                                        <span class="text-[14px]">-></span>
+                                        <span class="text-[14px]">{{ project.date_end|date:"Y-m-d" }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
     </div>
 {% endblock %}

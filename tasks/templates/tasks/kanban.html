@@ -1,9 +1,35 @@
-{% extends 'tasks/base.html' %}
+{% extends 'base/base.html' %}
+
+{% block panel %}
+        <div class="flex flex-col gap-4 md:flex-row md:items-start justify-between rounded-lg shadow-md mb-5 p-2 bg-white">
+            <form method="GET" class="flex items-center gap-3">
+            <select class="text-sm border rounded-md border-gray-300 py-1 px-2 bg-white" name="status" id="">
+                <option class="text-sm" value="">Все</option>
+                <option class="text-sm" value="planning" {% if current_status == "planning" %}selected{% endif %}>Планируются</option>
+                <option class="text-sm" value="progress" {% if current_status == "progress" %}selected{% endif %}>Выполняются</option>
+            </select>
+
+            <select class="text-sm border rounded-md border-gray-300 py-1 px-2 bg-white" name="sort" id="">
+                <option class="text-sm" value="">Сортировать</option>
+                <option class="text-sm" value="title" {% if current_sort == "title" %}selected{% endif %}>По названию</option>
+                <option class="text-sm" value="deadline" {% if current_sort == "deadline" %}selected{% endif %}>По дедлайну</option>
+            </select>
+
+            <button class="bg-gray-100 text-sm px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">Применить</button>
+        </form>
+        <div>
+            <a href="{% url 'tasks_kanban' %}">Доска</a>
+            <a href="{% url 'tasks_table' %}">Таблица</a>
+            <a class="bg-indigo-500 p-1 rounded-md text-white hover:bg-indigo-600" href="{% url 'tasks_add' %}">Создать задачу</a>
+        </div>
+        </div>
+{% endblock %}
 
 {% block content %}
-    <div class="flex gap-4 p-5 shadow-md rounded-lg">
+    <div class="flex gap-4 p-5 shadow-md rounded-lg bg-white">
 
-        <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
+        {% if current_status == "planning" or current_status == "" or current_status == None %}
+            <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
             <div class="p-1 rounded-md bg-amber-200">
                 <span class="text-amber-800">{{ status_planning }}</span>
             </div>
@@ -21,8 +47,10 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
 
-        <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
+        {% if current_status == "progress" or current_status == "" or current_status == None %}
+            <div class="flex flex-col items-start gap-5 p-3 rounded-lg">
             <div class="p-1 rounded-md bg-blue-200">
                 <span class="text-blue-800">{{ status_progress }}</span>
             </div>
@@ -40,6 +68,6 @@
                 {% endfor %}
             </ul>
         </div>
-
+        {% endif %}
     </div>
 {% endblock %}

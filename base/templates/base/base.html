@@ -1,0 +1,94 @@
+{% load icons %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        * { font-family: "Inter", sans-serif; }
+        body { overflow-x: hidden; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Overlay для блюра -->
+    <div id="overlay" class="fixed inset-0 bg-black/30 backdrop-blur-sm hidden z-10 transition-opacity duration-300"></div>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md p-4 transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-20 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-2 mb-3 border-b pb-3 border-gray-200">
+                    <img width="40" src="/media/logo.png" alt="">
+                    <p class="font-medium">Project Manager App</p>
+                </div>
+                <a href="{% url 'profile' %}" class="flex gap-3 bg-gray-50 p-2 rounded-lg border border-gray-200 cursor-pointer hover:shadow-sm transition-all">
+                    <img src="{{ request.user.get_avatar }}" class="w-10 h-10 rounded-full" alt="" />
+                    <div>
+                        <h4 class="text-base font-medium">{{ request.user.username }}</h4>
+                        <p class="text-sm text-gray-500">Статус</p>
+                    </div>
+                </a>
+                <nav>
+                    <ul class="flex flex-col mt-4 gap-1">
+                        <li><a class="flex items-center gap-4 ml-[8px] text-black/80 font-medium px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="{% url 'projects_kanban' %}">{% icon 'project' extra_classes='fa-xl text-black/60' %} <span>Проекты</span></a></li>
+                        <li><a class="flex items-center gap-4 text-black/80 font-medium px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="{% url 'tasks_kanban' %}">{% icon 'task' extra_classes='fa-xl text-black/60' %} <span>Задачи</span></a></li>
+                        <li><a class="flex items-center gap-4 ml-[8px] text-black/80 font-medium px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="">{% icon 'user' extra_classes='fa-xl text-black/60' %} <span>Пользователи</span></a></li>
+                        <li><a class="flex items-center gap-4 ml-[8px] text-black/80 font-medium px-2 py-3 cursor-pointer hover:bg-gray-100 rounded-lg" href="{% url 'send_message' %}">{% icon 'user' extra_classes='fa-xl text-black/60' %} <span>Контакты</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <a href="{% url 'logout' %}" class="flex items-center gap-4 font-medium transition-all rounded-lg p-2 hover:bg-gray-100">
+                {% icon 'logout' extra_classes='fa-xl text-black/60' %} <span class="text-black/70">Выйти из аккаунта</span>
+            </a>
+        </aside>
+
+        <!-- Main content -->
+        <main id="main" class="flex-1 ml-0 md:ml-64 transition-all duration-300 relative z-0 p-4">
+            <!-- Toggle button -->
+            <button id="sidebarToggle" class="md:hidden mb-4 p-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            {% block panel %}
+            {% endblock %}
+
+
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const main = document.getElementById('main');
+        const toggleBtn = document.getElementById('sidebarToggle');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if(sidebar.classList.contains('-translate-x-full')) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+        });
+
+        overlay.addEventListener('click', closeSidebar);
+    </script>
+</body>
+</html>
