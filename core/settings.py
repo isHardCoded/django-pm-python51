@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-h8wc4^l%=lc_%r&bcu8l+r37yy%2*=o(b=+v1d*7h^=cqr6%qg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,11 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_icons",
+    'channels',
 
     'users',
     'projects',
-    'tasks'
+    'tasks',
+    'chat'
 ]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 DJANGO_ICONS = {
     "ICONS": {
@@ -81,7 +89,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
+ASGI_APPLICATION = 'core.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
